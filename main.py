@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 
 # Caminho do arquivo CSV
-CSV_PATH = "data.csv"
+CSV_PATH = "./data.csv"
 
 # Localização inicial do mapa
 INITIAL_LOCATION = [ -5.08921, -42.8016]
