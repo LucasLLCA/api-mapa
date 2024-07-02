@@ -2,6 +2,7 @@ import pandas as pd
 import folium
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 # Caminho do arquivo CSV
 CSV_PATH = "./data.csv"
@@ -18,6 +19,17 @@ def carregar_dados_clinicas():
         raise HTTPException(status_code=500, detail="Erro ao carregar os dados das clínicas: " + str(e))
 
 app = FastAPI()
+
+# Configuração do CORS
+origins = ["*"]  # Permite todas as origens. Para mais segurança, especifique as URLs permitidas.
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/clinicas")
 def obter_clinicas():
@@ -54,3 +66,4 @@ def gerar_mapa_com_clinicas(dados_clinicas):
         folium.Marker([latitude, longitude], popup=nome_clinica).add_to(mapa)
 
     return mapa._repr_html_()
+
